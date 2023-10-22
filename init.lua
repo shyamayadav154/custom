@@ -26,6 +26,10 @@ autocmd('BufWritePre', {
 --   pattern = "*",
 --   command = "tabdo wincmd =",
 -- })
+autocmd("VimResized", {
+  pattern = "*",
+  command = "tabdo wincmd =",
+})
 
 local vim = vim
 
@@ -57,3 +61,4 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "100"
+-- vscode format i.e json files

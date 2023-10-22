@@ -2,39 +2,154 @@
 local M = {}
 local vim = vim
 
-M.general = {
-    n = {
-        [";"] = {
-            ":",
-            "enter command mode",
-            opts = {
-                nowait = true
-            }
-        },
-        ["<leader>u"] = { ":UndotreeToggle<CR>", 'Undo tree toggle' },
-        ["<leader>gs"] = { vim.cmd.Git, "Git commit status" },
-        ["<A-t>"] = { function ()
-            require("nvterm.terminal").toggle("horizontal")
-        end, "Terminal toggle horizontal" },
-        ["<leader>a"] = { function() require("harpoon.mark").add_file() end },
-        ["<leader>q"] = { function() require("harpoon.ui").toggle_quick_menu() end },
-        ["<leader>1"] = { function() require("harpoon.ui").nav_file(1) end },
-        ["<leader>2"] = { function() require("harpoon.ui").nav_file(2) end },
-        ["<leader>3"] = { function() require("harpoon.ui").nav_file(3) end },
-        ["<leader>4"] = { function() require("harpoon.ui").nav_file(4) end },
 
+
+-- vim.keymap.set('n',"J","mzj `z" )
+
+-- vim.keymap.set({'n', 't'}, '<A-h>', '<CMD>NavigatorLeft<CR>')
+-- vim.keymap.set({'n', 't'}, '<A-l>', '<CMD>NavigatorRight<CR>')
+-- vim.keymap.set({'n', 't'}, '<A-k>', '<CMD>NavigatorUp<CR>')
+-- vim.keymap.set({'n', 't'}, '<A-j>', '<CMD>NavigatorDown<CR>')
+-- vim.keymap.set({'n', 't'}, '<A-p>', '<CMD>NavigatorPrevious<CR>')
+
+M.general = {
+  x = {
+    ["<leader>p"] = { '"_dP', "Paste without losing" },
+  },
+  n = {
+    [";"] = {
+      ":",
+      "enter command mode",
+      opts = {
+        nowait = true,
+      },
     },
-    t = {
-        [";"] = {
-            ":",
-            opts = {
-                nowait = true
-            }
-        },
-        ["<A-t>"] = { function ()
-            require("nvterm.terminal").toggle("horizontal")
-        end }
-    }
+
+    -- context teesitter
+    ["[gc"] = {
+      function()
+        require("treesitter-context").go_to_context()
+      end,
+      "go to treesitter context",
+    },
+
+    -- lazygit
+    ["<leader>gg"] = {":LazyGit<CR>","Open lazy git ui"},
+
+    -- write to file
+    ["<leader>w"] = { "<cmd>w<CR>", "write to file" },
+
+    -- code folds
+    ["<leader>z"] = { "zfat", "toggle fold" },
+
+    -- quick fix navigation
+    ["<A-j>"] = { "<cmd>cnext<CR>zz", "next quickfix" },
+    ["<A-k>"] = { "<cmd>cprev<CR>zz", "prev quickfix" },
+    -- ["<leader>sj"] = { "<cmd>lnext<CR>zz", "next quickfix" },
+    -- ["<leader>sk"] = { "<cmd>lprev<CR>zz", "prev quickfix" },
+    -- ["<leader>so"] = { "<cmd>copen<CR>", "open quickfix" },
+    -- ["<leader>sl"] = { "<cmd>lopen<CR>", "open location" },
+    ["<leader>qo"] = { "<cmd>copen<CR>", "open quickfix" },
+    ["<leader>qc"] = { "<cmd>cclose<CR>", "open quickfix" },
+    -- ["<C-l>"] = { "<cmd>lopen<CR>", "open location" },
+
+    -- replace the word uder cursor
+    ["<leader>s"] = {
+      [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+      "replace word under cursor in current file",
+    },
+    ["<leader>p"] = { '"+p', "Paste from system clipboard" },
+
+    -- close other buffers
+    ["<leader>co"] = { ":%bd|e#<CR>", "close other buffers" },
+
+    ["<C-h>"] = { "<cmd> TmuxNavigateLeft<CR>", "window left" },
+    ["<C-l>"] = { "<cmd> TmuxNavigateRight<CR>", "window right" },
+    ["<C-j>"] = { "<cmd> TmuxNavigateDown<CR>", "window down" },
+    ["<C-k>"] = { "<cmd> TmuxNavigateUp<CR>", "window up" },
+
+    ["<C-d>"] = { "<C-d>zz", "Jump hanlf page down with cursor in th middle" },
+    ["<C-u>"] = { "<C-u>zz", "Jump hanlf page down with cursor in th middle" },
+
+    ["J"] = { "mzJ`z", "dont move cursor on j press" },
+
+    ["<leader>u"] = { ":UndotreeToggle<CR>", "Undo tree toggle" },
+    ["<leader>gs"] = { vim.cmd.Git, "Git commit status" },
+    ["<A-t>"] = {
+      function()
+        require("nvterm.terminal").toggle "horizontal"
+      end,
+      "Terminal toggle horizontal",
+    },
+    ["<leader>a"] = {
+      function()
+        require("harpoon.mark").add_file()
+      end,
+      "Add file to harpoon menu",
+    },
+    ["<leader>hp"] = {
+      function()
+        require("harpoon.ui").toggle_quick_menu()
+      end,
+      "Open harpoon menu",
+    },
+    ["<leader>1"] = {
+      function()
+        require("harpoon.ui").nav_file(1)
+      end,
+      "Navigate to file 1 in harpoon",
+    },
+    ["<leader>2"] = {
+      function()
+        require("harpoon.ui").nav_file(2)
+      end,
+      "Navigate to file 2 in harpoon",
+    },
+    ["<leader>3"] = {
+      function()
+        require("harpoon.ui").nav_file(3)
+      end,
+      "Navigate to file 3 in harpoon",
+    },
+    ["<leader>4"] = {
+      function()
+        require("harpoon.ui").nav_file(4)
+      end,
+      "Navigate to file 4 in harpoon",
+    },
+    ["<leader>j"] = {
+      function()
+        require("harpoon.ui").nav_next()
+      end,
+      "Navigate to next mark in harpoon",
+    },
+    ["<leader>k"] = {
+      function()
+        require("harpoon.ui").nav_prev()
+      end,
+      "Navigate to prev mark in harpoon",
+    },
+  },
+  v = {
+    -- line up and down
+    ["J"] = { ":m '>+1<CR>gv=gv", "Move line down" },
+    ["K"] = { ":m '<-2<CR>gv=gv", "Move line up" },
+    -- paste from system clipboard
+    ["< leader>p"] = { '"+p', "Paste from system clipboard" },
+  },
+  t = {
+    [";"] = {
+      ":",
+      opts = {
+        nowait = true,
+      },
+    },
+    ["<A-t>"] = {
+      function()
+        require("nvterm.terminal").toggle "horizontal"
+      end,
+    },
+  },
 }
 -- M.harpoon = {
 --     n = {
