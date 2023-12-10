@@ -8,7 +8,7 @@ local plugins = { -- Override plugin definition options
     "neovim/nvim-lspconfig",
     dependencies = { -- format & linting
       {
-        "jose-elias-alvarez/null-ls.nvim",
+        "nvimtools/none-ls.nvim",
         config = function()
           require "custom.configs.null-ls"
         end,
@@ -41,11 +41,10 @@ local plugins = { -- Override plugin definition options
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
-    event = "BufRead",
+    event = "InsertEnter",
     opts = {
       suggestion = {
         auto_trigger = true,
-        debounce = 150,
       },
     },
   },

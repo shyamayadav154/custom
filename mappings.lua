@@ -16,6 +16,12 @@ M.general = {
   x = {
     ["<leader>p"] = { '"_dP', "Paste without losing" },
   },
+    i = {
+        --comment code Comment.nvim
+        ["<A-c>"]={function ()
+            require('Comment').toggle()
+        end, "Comment code"},
+    },
   n = {
     [";"] = {
       ":",
@@ -24,22 +30,33 @@ M.general = {
         nowait = true,
       },
     },
-
+    -- enable cspell check using null ls
+     -- telescope branches
+    ["<leader>gb"] = {
+      function()
+        require("telescope.builtin").git_branches()
+      end,
+      "git branches",
+    },
     -- context teesitter
-    ["[gc"] = {
+    ["[tc"] = {
       function()
         require("treesitter-context").go_to_context()
       end,
       "go to treesitter context",
     },
+    -- double comma to template litral with bracket using nvim-surround
+    ["<leader>rt"]= {"",'template litral with bracket'},
+    -- lsp restart
+    ["<leader>lr"] = {":LspRestart<CR>","Restart LSP" }, -- lazygit
+    -- diff views
 
-    -- lazygit
     ["<leader>gg"] = {":LazyGit<CR>","Open lazy git ui"},
 
     -- write to file
     ["<leader>w"] = { "<cmd>w<CR>", "write to file" },
 
-    -- code folds
+    --html/jsx code folds
     ["<leader>z"] = { "zfat", "toggle fold" },
 
     -- quick fix navigation
@@ -58,6 +75,12 @@ M.general = {
       [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
       "replace word under cursor in current file",
     },
+    -- replace prop input into component props
+    ["<leader>sp"] = {
+      [[:s/\v(\w+),/\1={\1}/g<CR>]],
+      "replace word under cursor in current file",
+    },
+
     ["<leader>p"] = { '"+p', "Paste from system clipboard" },
 
     -- close other buffers
@@ -135,7 +158,12 @@ M.general = {
     ["J"] = { ":m '>+1<CR>gv=gv", "Move line down" },
     ["K"] = { ":m '<-2<CR>gv=gv", "Move line up" },
     -- paste from system clipboard
-    ["< leader>p"] = { '"+p', "Paste from system clipboard" },
+    ["<leader>p"] = { '"+p', "Paste from system clipboard" },
+    -- replace prop input into component props
+    ["<leader>sp"] = {
+      [[:s/\v(\w+),/\1={\1}/g<CR>]],
+      "replace prop input into component props",
+    },
   },
   t = {
     [";"] = {

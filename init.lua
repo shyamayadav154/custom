@@ -1,24 +1,45 @@
 local autocmd = vim.api.nvim_create_autocmd
 
-autocmd('TextChanged', {
-    pattern = '*',
-    command = 'silent! update'
+-- autoc command to convert c Tab into const in javascript file
+autocmd("FileType", {
+  pattern = "javascript",
+    command = "inoremap <buffer> c<Tab> const ",
 })
 
-autocmd('InsertLeave', {
-    pattern = '*',
-    command = 'silent! update'
+
+autocmd("FileType", {
+  pattern = "javascript",
+    command = "inoremap <buffer> l<Tab> let ",
+})
+
+
+autocmd("FileType", {
+  pattern = "javascript",
+    command = "inoremap <buffer> f<Tab> function ",
+})
+
+
+
+
+autocmd("TextChanged", {
+  pattern = "*",
+  command = "silent! update",
+})
+
+autocmd("InsertLeave", {
+  pattern = "*",
+  command = "silent! update",
 })
 
 -- got to last loc
-autocmd('BufReadPost', {
-    pattern = '*',
-    command = [[if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif]]
+autocmd("BufReadPost", {
+  pattern = "*",
+  command = [[if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif]],
 })
 
-autocmd('BufWritePre', {
-    pattern = '*',
-    command = 'lua vim.lsp.buf.formatting_sync(nil, 1000)'
+autocmd("BufWritePre", {
+  pattern = "*",
+  command = "lua vim.lsp.buf.formatting_sync(nil, 1000)",
 })
 
 -- Auto resize panes when resizing nvim window
@@ -56,9 +77,15 @@ vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
-vim.opt.isfname:append("@-@")
+vim.opt.isfname:append "@-@"
 
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "100"
+vim.opt.spelllang = "en_us"
+vim.opt.spell = true
 -- vscode format i.e json files
+vim.g.vscode_snippets_path = "~/.config/nvim/lua/custom/my_snippets"
+
+-- quickfixl list modifiable
+vim.opt.filetype = "on"

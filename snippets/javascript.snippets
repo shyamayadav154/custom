@@ -1,0 +1,19 @@
+
+# Functions
+# prototype
+snippet proto
+	${1:class_name}.prototype.${2:method_name} = function(${3}) {
+		${0:${VISUAL}}
+	};
+
+#useEffect
+snippet ue
+	useEffect(() => {
+		${0:${VISUAL}}
+	}, [${1}]);
+
+
+snippet div
+        <div id="$1" class="$2">
+            $0
+        </div>
