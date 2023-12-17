@@ -13,7 +13,7 @@ local function organise_imports()
 end
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "clangd", "eslint", "graphql", "prismals", "emmet_ls" }
+local servers = { "html", "cssls", "clangd", "eslint", "graphql", "prismals" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -21,6 +21,26 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+lspconfig.emmet_ls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = {
+    "html",
+    "css",
+    "scss",
+    -- "javascript",
+    "javascriptreact",
+    -- "typescript",
+    "typescriptreact",
+    "vue",
+    "svelte",
+    "markdown",
+    "pug",
+    "haml",
+    "xml",
+  },
+}
 
 lspconfig.tsserver.setup {
   on_attach = on_attach,

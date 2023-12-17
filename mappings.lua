@@ -2,8 +2,6 @@
 local M = {}
 local vim = vim
 
-
-
 -- vim.keymap.set('n',"J","mzj `z" )
 
 -- vim.keymap.set({'n', 't'}, '<A-h>', '<CMD>NavigatorLeft<CR>')
@@ -16,11 +14,10 @@ M.general = {
   x = {
     ["<leader>p"] = { '"_dP', "Paste without losing" },
   },
-    i = {
-        --comment code Comment.nvim
-        ["<A-c>"]={function ()
-            require('Comment').toggle()
-        end, "Comment code"},
+  i = {
+    -- luasnip keymaps
+    ["<A-n>"]=  { function() require('luasnip').expand_or_jump() end, "Jump onestep" },
+    -- ["<A-e>"]=  { function() require('luasnip').jump(-1) end,  "jump one back"},
     },
   n = {
     [";"] = {
@@ -30,15 +27,15 @@ M.general = {
         nowait = true,
       },
     },
-    -- enable cspell check using null ls
-     -- telescope branches
+    --save on double esc press
+    ["<esc><esc>"] = { ":w<CR>", "Save on double esc press" },
+    -- telescope branches
     ["<leader>gb"] = {
       function()
         require("telescope.builtin").git_branches()
       end,
       "git branches",
-    },
-    -- context teesitter
+    }, -- context teesitter
     ["[tc"] = {
       function()
         require("treesitter-context").go_to_context()
@@ -46,12 +43,12 @@ M.general = {
       "go to treesitter context",
     },
     -- double comma to template litral with bracket using nvim-surround
-    ["<leader>rt"]= {"",'template litral with bracket'},
+    ["<leader>rt"] = { "", "template litral with bracket" },
     -- lsp restart
-    ["<leader>lr"] = {":LspRestart<CR>","Restart LSP" }, -- lazygit
+    ["<leader>lr"] = { ":LspRestart<CR>", "Restart LSP" }, -- lazygit
     -- diff views
 
-    ["<leader>gg"] = {":LazyGit<CR>","Open lazy git ui"},
+    ["<leader>gg"] = { ":LazyGit<CR>", "Open lazy git ui" },
 
     -- write to file
     ["<leader>w"] = { "<cmd>w<CR>", "write to file" },

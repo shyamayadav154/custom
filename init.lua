@@ -1,5 +1,12 @@
 local autocmd = vim.api.nvim_create_autocmd
 
+
+-- autocmd to format on buff write
+-- autocmd("BufWritePost", {
+--   pattern = "*",
+--   command = "lua vim.lsp.buf.format()",
+-- })
+
 -- autoc command to convert c Tab into const in javascript file
 autocmd("FileType", {
   pattern = "javascript",
@@ -18,6 +25,10 @@ autocmd("FileType", {
     command = "inoremap <buffer> f<Tab> function ",
 })
 
+autocmd("FileType", {
+  pattern = "javascript",
+    command = "inoremap buffer> r<Tab> return ",
+})
 
 
 
@@ -25,6 +36,12 @@ autocmd("TextChanged", {
   pattern = "*",
   command = "silent! update",
 })
+
+-- autocmd("TextChanged", {
+--   pattern = "*",
+--     -- format
+--   command = "lua vim.lsp.buf.format()",
+-- })
 
 autocmd("InsertLeave", {
   pattern = "*",
@@ -37,10 +54,16 @@ autocmd("BufReadPost", {
   command = [[if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif]],
 })
 
-autocmd("BufWritePre", {
-  pattern = "*",
-  command = "lua vim.lsp.buf.formatting_sync(nil, 1000)",
-})
+-- autocmd("BufWritePre", {
+--   pattern = "*",
+--   command = "lua vim.lsp.buf.format()",
+-- })
+
+
+-- autocmd("FileWritePre", {
+--   pattern = "*",
+--   command = "lua vim.lsp.buf.format()",
+-- })
 
 -- Auto resize panes when resizing nvim window
 -- autocmd("VimResized", {
@@ -85,7 +108,13 @@ vim.opt.colorcolumn = "100"
 vim.opt.spelllang = "en_us"
 vim.opt.spell = true
 -- vscode format i.e json files
-vim.g.vscode_snippets_path = "~/.config/nvim/lua/custom/my_snippets"
+vim.g.vscode_snippets_path = "~/.config/nvim/lua/custom/vs_snippets"
+
+-- snipmate format 
+vim.g.snipmate_snippets_path = "~/.config/nvim/lua/custom/snippets"
+
+-- lua format 
+vim.g.lua_snippets_path ="~/.config/nvim/lua/custom/lua_snippets"
 
 -- quickfixl list modifiable
 vim.opt.filetype = "on"

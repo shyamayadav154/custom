@@ -12,13 +12,7 @@
   "useState short": {
     "prefix": "ust",
     "body": [
-      "const [${1:first}, set${1/(.*)/${1:/capitalize}/}] = useState(${2:second})"
-    ]
-  },
-  "useLocalStorage": {
-    "prefix": "usls",
-    "body": [
-      "const [${1:first}, set${1/(.*)/${1:/capitalize}/}] = useLocalStorage(${3:second},undefined,{raw:true})"
+      "const [${1:first}, set${1/(.*)/${1:/capitalize}/}] = useState(${2})"
     ]
   },
   "useQuery": {
@@ -31,7 +25,7 @@
       "})"
     ]
   },
-  "useQuery intermidiate": {
+  "useQuery intermediate": {
     "prefix": "usqi",
     "body": [
       "const { data, error, loading, refetch } = useQuery($1, {",
@@ -117,7 +111,12 @@
   },
   "useEffect short": {
     "prefix": "usf",
-    "body": ["useEffect(() => {", "  ${1:first}", "", "}, [${2:third}])"],
+    "body": [
+      "useEffect(() => {",
+      "  ${1:first}",
+      "",
+      "}, [${2}])"
+    ],
     "description": "useEffect short"
   },
   "useEffect long": {
@@ -129,7 +128,7 @@
       "  return () => {",
       "    ${2:second}",
       "  }",
-      "}, [${3:third}])",
+      "}, [${3}])",
       ""
     ],
     "description": "useEffect long"
@@ -949,7 +948,7 @@
       "  return () => {",
       "    ${2:second}",
       "  }",
-      "}, [${3:third}])",
+      "}, [${3}])",
       ""
     ],
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
@@ -1006,7 +1005,7 @@
     "key": "useState",
     "prefix": "useStateSnippet",
     "body": [
-      "const [${1:first}, set${1/(.*)/${1:/capitalize}/}] = useState(${2:second})"
+      "const [${1:first}, set${1/(.*)/${1:/capitalize}/}] = useState(${2})"
     ],
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },

@@ -1,9 +1,49 @@
 local overrides = require "custom.configs.overrides"
 
-local status = true
-
 ---@type NvPluginSpec[]
 local plugins = { -- Override plugin definition options
+  {
+    "xiyaowong/transparent.nvim",
+    cmd = { "TransparentToggle" },
+  },
+  {
+    "bluz71/vim-nightfly-guicolors",
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      -- load the colorscheme here
+      vim.cmd [[colorscheme nightfly]]
+    end,
+  },
+  {
+    "tpope/vim-dadbod",
+    dependencies = {
+      "kristijanhusak/vim-dadbod-ui",
+      "kristijanhusak/vim-dadbod-completion",
+    },
+    config = function()
+      require("custom.configs.dadbod").setup()
+    end,
+  },
+  {
+    "kristijanhusak/vim-dadbod-completion",
+    cmd = {
+      "DBCompletionClearCache",
+    },
+    dependencies = {
+      "tpope/vim-dadbod",
+      "kristijanhusak/vim-dadbod-ui",
+      "hrsh7th/nvim-cmp",
+    },
+    -- event = "InsertEnter",
+  },
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    dependencies = {
+      "tpope/vim-dadbod",
+    },
+    cmd = { "DBUIToggle", "DBUIAddConnection", "DBUI", "DBUIFindBuffer", "DBUIRenameBuffer", "DBUIConfig", "DB" },
+  },
+
   {
     "neovim/nvim-lspconfig",
     dependencies = { -- format & linting
@@ -216,14 +256,6 @@ local plugins = { -- Override plugin definition options
         },
       }
     end,
-  },
-  {
-    "tpope/vim-dadbod",
-    cmd = { "DB" },
-  },
-  {
-    "kristijanhusak/vim-dadbod-ui",
-    cmd = { "DBUIToggle", "DBUIAddConnection", "DBUI", "DBUIFindBuffer", "DBUIRenameBuffer", "DBUIConfig", "DB" },
   },
   {
     "folke/twilight.nvim",
