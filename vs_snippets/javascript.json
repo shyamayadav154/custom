@@ -3,7 +3,7 @@
     "prefix": "resfn",
     "body": [
       "/** @param {{ prisma: Prisma}} context */",
-      "async function $1(parent, args, context, info){",
+      "export async function $1(parent, args, context, info){",
       "const select = common_utils.getSelection(info, info.fieldNodes[0].selectionSet)",
       "  $2",
       "}"

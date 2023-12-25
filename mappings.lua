@@ -15,8 +15,10 @@ M.general = {
     ["<leader>p"] = { '"_dP', "Paste without losing" },
   },
   i = {
+
     -- luasnip keymaps
-    ["<A-n>"]=  { function() require('luasnip').expand_or_jump() end, "Jump onestep" },
+    ["<A-n>"]=  { function() require('luasnip').jump( 1) end, "Jump onestep" },
+    ["<A-e>"]=  { function() require('luasnip').expand_or_jump() end, "Jump onestep" },
     -- ["<A-e>"]=  { function() require('luasnip').jump(-1) end,  "jump one back"},
     },
   n = {
@@ -27,6 +29,15 @@ M.general = {
         nowait = true,
       },
     },
+
+    ["<leader>o"] = {"<CMD>OrganizeImports<CR>","Organize imports tss lsp"},
+    ["<leader>e"] = {"<cmd>NvimTreeToggle<CR>", "Toggle NvimTree"},
+
+        -- resize window
+    ["<leader>hh"] = { ":vertical resize -5<CR>", "Resize window left" },
+    ["<leader>ll"] = { ":vertical resize +5<CR>", "Resize window right" },
+    ["<leader>kk"] = { ":resize -5<CR>", "Resize window up" },
+    ["<leader>jj"] = { ":resize +5<CR>", "Resize window down" },
     --save on double esc press
     ["<esc><esc>"] = { ":w<CR>", "Save on double esc press" },
     -- telescope branches
@@ -156,6 +167,9 @@ M.general = {
     ["K"] = { ":m '<-2<CR>gv=gv", "Move line up" },
     -- paste from system clipboard
     ["<leader>p"] = { '"+p', "Paste from system clipboard" },
+    -- duplicate
+    ["<A-k>"] = {"<cmd>VisualDuplicate -1<CR>", "Duplicate line down"},
+    ["<A-j>"] = {"<cmd>VisualDuplicate +1<CR>", "Duplicate line up"},
     -- replace prop input into component props
     ["<leader>sp"] = {
       [[:s/\v(\w+),/\1={\1}/g<CR>]],

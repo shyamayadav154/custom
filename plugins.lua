@@ -1,18 +1,71 @@
 local overrides = require "custom.configs.overrides"
 
+-- TODO: hell no
+
 ---@type NvPluginSpec[]
 local plugins = { -- Override plugin definition options
   {
-    "xiyaowong/transparent.nvim",
-    cmd = { "TransparentToggle" },
+    "barrett-ruth/import-cost.nvim",
+    event = "VeryLazy",
+    build = "sh install.sh yarn",
+    -- if on windows
+    -- build = 'pwsh install.ps1 yarn',
+    config = true,
   },
   {
-    "bluz71/vim-nightfly-guicolors",
-    priority = 1000, -- make sure to load this before all the other start plugins
+    "hinell/duplicate.nvim",
+    event = "VeryLazy",
+  },
+  {
+    "Wansmer/treesj",
+    keys = { "<space>m" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-      -- load the colorscheme here
-      vim.cmd [[colorscheme nightfly]]
+      require("treesj").setup {--[[ your config ]]
+      }
     end,
+  },
+  {
+    "mg979/vim-visual-multi",
+    event = "VeryLazy",
+  },
+  {
+    "axelvc/template-string.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("template-string").setup {}
+    end,
+  },
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   opts = {},
+  --   event = "BufRead",
+  --   config = function()
+  --     local keymap = vim.keymap
+  --     keymap.set("n", "<leader>m", "<cmd>TSToolsOrganizeImports<cr>")
+  --     keymap.set("n", "<leader>a", "<cmd>TSToolsAddMissingImports<cr>")
+  --
+  --     local api = require "typescript-tools.api"
+  --     require("typescript-tools").setup {
+  --       handlers = {
+  --               -- not used warning disable
+  --         ["textDocument/publishDiagnostics"] = api.filter_diagnostics { 6133 },
+  --       },
+  --       settings = {
+  --         tsserver_file_preferences = {
+  --           importModuleSpecifierPreference = "non-relative",
+  --           -- includeInlayParameterNameHints = "all",
+  --         },
+  --       },
+  --     }
+  --   end,
+  -- },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = { "TodoTrouble", "TodoTelescope", "TodoQuickFix", "TodoLocList" },
+    opts = {},
   },
   {
     "tpope/vim-dadbod",

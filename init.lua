@@ -1,6 +1,13 @@
 local autocmd = vim.api.nvim_create_autocmd
 
 
+-- highlights yankgc
+autocmd("TextYankPost", {
+  pattern = "*",
+  command = "silent! lua vim.highlight.on_yank()",
+})
+
+
 -- autocmd to format on buff write
 -- autocmd("BufWritePost", {
 --   pattern = "*",
@@ -10,27 +17,24 @@ local autocmd = vim.api.nvim_create_autocmd
 -- autoc command to convert c Tab into const in javascript file
 autocmd("FileType", {
   pattern = "javascript",
-    command = "inoremap <buffer> c<Tab> const ",
+  command = "inoremap <buffer> c<Tab> const ",
 })
 
 
-autocmd("FileType", {
-  pattern = "javascript",
-    command = "inoremap <buffer> l<Tab> let ",
-})
+-- autocmd("FileType", {
+--   pattern = "javascript",
+--   command = "inoremap <buffer> l<Tab> let ",
+-- })
 
+-- autocmd("FileType", {
+--   pattern = "javascript",
+--   command = "inoremap <buffer> f<Tab> function ",
+-- })
 
-autocmd("FileType", {
-  pattern = "javascript",
-    command = "inoremap <buffer> f<Tab> function ",
-})
-
-autocmd("FileType", {
-  pattern = "javascript",
-    command = "inoremap buffer> r<Tab> return ",
-})
-
-
+-- autocmd("FileType", {
+--   pattern = "javascript",
+--   command = "inoremap <buffer> r<Tab> return ",
+-- })
 
 autocmd("TextChanged", {
   pattern = "*",
@@ -59,7 +63,6 @@ autocmd("BufReadPost", {
 --   command = "lua vim.lsp.buf.format()",
 -- })
 
-
 -- autocmd("FileWritePre", {
 --   pattern = "*",
 --   command = "lua vim.lsp.buf.format()",
@@ -76,6 +79,15 @@ autocmd("VimResized", {
 })
 
 local vim = vim
+
+-- vim.opt.cursorline = true
+
+
+if vim.g.neovide then
+    vim.opt.guifont = "FiraCode Nerd Font:h12"
+    vim.g.neovide_transparency = 0.9
+    vim.g.neovide_scale_factor = 1
+    end
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
@@ -110,11 +122,11 @@ vim.opt.spell = true
 -- vscode format i.e json files
 vim.g.vscode_snippets_path = "~/.config/nvim/lua/custom/vs_snippets"
 
--- snipmate format 
+-- snipmate format
 vim.g.snipmate_snippets_path = "~/.config/nvim/lua/custom/snippets"
 
--- lua format 
-vim.g.lua_snippets_path ="~/.config/nvim/lua/custom/lua_snippets"
+-- lua format
+vim.g.lua_snippets_path = "~/.config/nvim/lua/custom/lua_snippets"
 
 -- quickfixl list modifiable
 vim.opt.filetype = "on"
