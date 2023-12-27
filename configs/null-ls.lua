@@ -13,7 +13,7 @@ local sources = {
   b.formatting.deno_fmt, -- choosed deno for ts/js files cuz its very fast!
   b.formatting.prettier.with { filetypes = { "html", "markdown", "css", "javascript", "javascriptreact", "json" } }, -- so prettier works only on these filetypes
 
-  b.code_actions.eslint_d,
+  b.code_actions.eslint,
 
   -- cpsell
   -- b.diagnostics.cspell,

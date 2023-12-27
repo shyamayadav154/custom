@@ -5,13 +5,20 @@ local overrides = require "custom.configs.overrides"
 ---@type NvPluginSpec[]
 local plugins = { -- Override plugin definition options
   {
-    "barrett-ruth/import-cost.nvim",
-    event = "VeryLazy",
-    build = "sh install.sh yarn",
-    -- if on windows
-    -- build = 'pwsh install.ps1 yarn',
-    config = true,
+    "j-hui/fidget.nvim",
+    event = "BufRead",
+    opts = {
+      -- options
+    },
   },
+  -- {
+  --   "barrett-ruth/import-cost.nvim",
+  --   event = {"BufEnter", "InsertLeave", "CursorHold","BufRead" },
+  --   build = "sh install.sh yarn",
+  --   -- if on windows
+  --   -- build = 'pwsh install.ps1 yarn',
+  --   config = true,
+  -- },
   {
     "hinell/duplicate.nvim",
     event = "VeryLazy",

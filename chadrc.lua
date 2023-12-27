@@ -6,15 +6,11 @@ local highlights = require "custom.highlights"
 
 M.ui = {
   theme = "onedark",
-  transparency = false,
   -- theme_toggle = { "onedark", "one_light" },
 
   hl_override = highlights.override,
   hl_add = highlights.add,
 
-    statusline = {
-        theme= 'default'
-    }
 }
 
 M.plugins = "custom.plugins"

@@ -15,9 +15,9 @@ M.general = {
     ["<leader>p"] = { '"_dP', "Paste without losing" },
   },
   i = {
-
     -- luasnip keymaps
     ["<A-n>"]=  { function() require('luasnip').jump( 1) end, "Jump onestep" },
+    ["<A-p>"]=  { function() require('luasnip').jump(-1) end, "Jump onestep" },
     ["<A-e>"]=  { function() require('luasnip').expand_or_jump() end, "Jump onestep" },
     -- ["<A-e>"]=  { function() require('luasnip').jump(-1) end,  "jump one back"},
     },
@@ -29,6 +29,8 @@ M.general = {
         nowait = true,
       },
     },
+    --Telescope find files
+    ["<leader>ff"] = {"<CMD>Telescope find_files hidden=true <CR>", "Find Files hidden too" },
 
     ["<leader>o"] = {"<CMD>OrganizeImports<CR>","Organize imports tss lsp"},
     ["<leader>e"] = {"<cmd>NvimTreeToggle<CR>", "Toggle NvimTree"},
@@ -36,8 +38,8 @@ M.general = {
         -- resize window
     ["<leader>hh"] = { ":vertical resize -5<CR>", "Resize window left" },
     ["<leader>ll"] = { ":vertical resize +5<CR>", "Resize window right" },
-    ["<leader>kk"] = { ":resize -5<CR>", "Resize window up" },
-    ["<leader>jj"] = { ":resize +5<CR>", "Resize window down" },
+    ["<leader>jj"] = { ":resize -5<CR>", "Resize window up" },
+    ["<leader>kk"] = { ":resize +5<CR>", "Resize window down" },
     --save on double esc press
     ["<esc><esc>"] = { ":w<CR>", "Save on double esc press" },
     -- telescope branches
