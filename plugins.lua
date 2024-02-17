@@ -1,34 +1,102 @@
 local overrides = require "custom.configs.overrides"
 
--- TODO: hell no
-
 ---@type NvPluginSpec[]
 local plugins = { -- Override plugin definition options
+  -- {
+  --   "stevearc/conform.nvim",
+  --   opts = {},
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   config = function()
+  --     require "custom.configs.conform"
+  --   end,
+  -- },
+  {
+    "RRethy/vim-illuminate",
+    event = "VeryLazy",
+    opts = {
+      delay = 200,
+      large_file_cutoff = 2000,
+      large_file_overrides = {
+        providers = { "lsp" },
+      },
+    },
+    config = function(_, opts)
+      require("illuminate").configure(opts)
+
+      local function map(key, dir, buffer)
+        vim.keymap.set("n", key, function()
+          require("illuminate")["goto_" .. dir .. "_reference"](false)
+        end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
+      end
+
+      map("]]", "next")
+      map("[[", "prev")
+
+      -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+          local buffer = vim.api.nvim_get_current_buf()
+          map("]]", "next", buffer)
+          map("[[", "prev", buffer)
+        end,
+      })
+    end,
+    keys = {
+      { "]]", desc = "Next Reference" },
+      { "[[", desc = "Prev Reference" },
+    },
+  },
+  { "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+  },
+  {
+    "jesseleite/nvim-macroni",
+    cmd = { "YankMacro" },
+  },
+  -- {
+  --   "nvim-lualine/lualine.nvim",
+  --   event = "BufRead",
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   opts = {
+  --     options = {
+  --       component_separators = { left = "|", right = "|" },
+  --       section_separators = { left = "", right = "" },
+  --     },
+  --   },
+  -- },
   {
     "j-hui/fidget.nvim",
-    event = "BufRead",
+    event = { "BufRead", "TextChangedI" },
     opts = {
       -- options
     },
   },
-  -- {
-  --   "barrett-ruth/import-cost.nvim",
-  --   event = {"BufEnter", "InsertLeave", "CursorHold","BufRead" },
-  --   build = "sh install.sh yarn",
-  --   -- if on windows
-  --   -- build = 'pwsh install.ps1 yarn',
-  --   config = true,
-  -- },
+  {
+    "barrett-ruth/import-cost.nvim",
+    event = { "BufEnter", "InsertLeave", "CursorHold", "BufRead" },
+    build = "sh install.sh yarn",
+    -- if on windows
+    -- build = 'pwsh install.ps1 yarn',
+    config = true,
+  },
   {
     "hinell/duplicate.nvim",
     event = "VeryLazy",
   },
   {
     "Wansmer/treesj",
-    keys = { "<space>m" },
+    event = "VeryLazy",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-      require("treesj").setup {--[[ your config ]]
+      require "plugins.configs.treesitter"
+      require("treesj").setup {
+        use_default_keymaps = false,
       }
     end,
   },
@@ -71,7 +139,8 @@ local plugins = { -- Override plugin definition options
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    cmd = { "TodoTrouble", "TodoTelescope", "TodoQuickFix", "TodoLocList" },
+    event = "VeryLazy",
+    -- cmd = { "TodoTrouble", "TodoTelescope", "TodoQuickFix", "TodoLocList" },
     opts = {},
   },
   {
@@ -103,9 +172,9 @@ local plugins = { -- Override plugin definition options
     },
     cmd = { "DBUIToggle", "DBUIAddConnection", "DBUI", "DBUIFindBuffer", "DBUIRenameBuffer", "DBUIConfig", "DB" },
   },
-
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile", "BufRead" },
     dependencies = { -- format & linting
       {
         "nvimtools/none-ls.nvim",
@@ -140,9 +209,20 @@ local plugins = { -- Override plugin definition options
   },
   {
     "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
+    cmd = { "Copilot", "CopilotLine" },
     event = "InsertEnter",
     opts = {
+      filetypes = {
+        yaml = true,
+        markdown = true,
+        help = false,
+        gitcommit = false,
+        gitrebase = false,
+        hgcommit = false,
+        svn = false,
+        cvs = false,
+        ["."] = false,
+      },
       suggestion = {
         auto_trigger = true,
       },
@@ -172,8 +252,8 @@ local plugins = { -- Override plugin definition options
   },
   {
     "kylechui/nvim-surround",
+    keys = { "cs", "ds", "ys" },
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
     config = function()
       require("nvim-surround").setup {
         -- Configuration here, or leave empty to use defaults
@@ -231,15 +311,7 @@ local plugins = { -- Override plugin definition options
     -- nvim treesitter context plugin
     "nvim-treesitter/nvim-treesitter-context",
     cmd = { "TSContextEnable", "TSContextDisable", "TSContextToggle" },
-    event = "BufRead",
-    config = function()
-      require("nvim-treesitter.configs").setup {
-        context_commentstring = {
-          enable = true,
-          enable_autocmd = true,
-        },
-      }
-    end,
+    event = "VeryLazy",
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
@@ -258,16 +330,19 @@ local plugins = { -- Override plugin definition options
               ["af"] = { query = "@call.outer", kind = "select outer part of a method/function" },
               ["if"] = { query = "@call.inner", kind = "select inner part of a method/function" },
 
-              ["ac"] = { query = "@class.outer", kind = "select outer part of a class" },
-              ["ic"] = { query = "@class.inner", kind = "select inner part of a class" },
-
               ["a="] = { query = "@assignment.outer", kind = "select outer part of an assignment" },
               ["i="] = { query = "@assignment.inner", kind = "select inner part of an assignment" },
               ["l="] = { query = "@assignment.lhs", kind = "select left hand side of an assignment" },
               ["r="] = { query = "@assignment.rhs", kind = "select right hand side of an assignment" },
 
               ["aa"] = { query = "@parameter.outer", kind = "parameter" },
-              ["ii"] = { query = "@parameter.inner", kind = "parameter" },
+              -- ["ii"] = { query = "@parameter.inner", kind = "parameter" },
+              --loop outer
+              ["al"] = { query = "@loop.outer", kind = "loop outer" },
+              ["il"] = { query = "@loop.inner", kind = "loop inner" },
+              -- conditional
+              ["ai"] = { query = "@conditional.outer", kind = "conditional outer" },
+              ["ii"] = { query = "@conditional.inner", kind = "conditional inner" },
             },
           },
           swap = {
@@ -285,31 +360,31 @@ local plugins = { -- Override plugin definition options
             enable = true,
             set_jumps = true,
             goto_next_start = {
-              ["]m"] = "@function.outer",
-              ["]f"] = "@call.outer",
-              ["]c"] = "@class.outer",
-              ["]i"] = "@condition.outer",
-              ["]l"] = "@loop.outer",
+              ["tm"] = "@function.outer",
+              ["tl"] = "@loop.outer",
+              ["tf"] = "@call.outer",
+              ["tc"] = "@class.outer",
+              ["ti"] = "@conditional.outer",
+            },
+            goto_previous_start = {
+              ["tM"] = "@function.outer",
+              ["tL"] = "@loop.outer",
+              ["tf"] = "@call.outer",
+              ["tc"] = "@class.outer",
+              ["tI"] = "@conditional.outer",
             },
             goto_next_end = {
               ["]M"] = "@function.outer",
               ["]F"] = "@call.outer",
               ["]C"] = "@class.outer",
-              ["]I"] = "@condition.outer",
+              ["]I"] = "@conditional.outer",
               ["]L"] = "@loop.outer",
-            },
-            goto_previous_start = {
-              ["[m"] = "@function.outer",
-              ["[f"] = "@call.outer",
-              ["[c"] = "@class.outer",
-              ["[i"] = "@condition.outer",
-              ["[l"] = "@loop.outer",
             },
             goto_previous_end = {
               ["[M"] = "@function.outer",
               ["[F"] = "@call.outer",
               ["[C"] = "@class.outer",
-              ["[I"] = "@condition.outer",
+              ["[I"] = "@conditional.outer",
               ["[L"] = "@loop.outer",
             },
           },
@@ -320,6 +395,7 @@ local plugins = { -- Override plugin definition options
   {
     "folke/twilight.nvim",
     cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
+    opts = {},
   },
   {
     "simrat39/symbols-outline.nvim",

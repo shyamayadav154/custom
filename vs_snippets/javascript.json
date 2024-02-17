@@ -1,5 +1,11 @@
 {
   "resolver graphql": {
+    "sleep": {
+      "prefix": "slp",
+      "body": [
+        "const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))"
+      ]
+    },
     "prefix": "resfn",
     "body": [
       "/** @param {{ prisma: Prisma}} context */",
@@ -111,12 +117,7 @@
   },
   "useEffect short": {
     "prefix": "usf",
-    "body": [
-      "useEffect(() => {",
-      "  ${1:first}",
-      "",
-      "}, [${2}])"
-    ],
+    "body": ["useEffect(() => {", "  ${1:first}", "", "}, [${2}])"],
     "description": "useEffect short"
   },
   "useEffect long": {
@@ -858,7 +859,7 @@
   "consoleLog": {
     "key": "consoleLog",
     "prefix": "clg",
-    "body": ["console.log(${1:first})"],
+    "body": ["console.log({${1}})"],
     "description": "Displays a message in the console",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
@@ -1835,13 +1836,13 @@
   },
   "forOf": {
     "key": "forOf",
-    "prefix": "fof",
+    "prefix": "for",
     "body": ["for(let ${1:first} of ${2:second}) {${3:third}}"],
     "description": "Iterating over property names of iterable objects",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
-  "forIn": {
-    "key": "forIn",
+  "foreign": {
+    "key": "foreign",
     "prefix": "fin",
     "body": ["for(let ${1:first} in ${2:second}) {${3:third}}"],
     "description": "Iterating over property values of iterable objects",
@@ -1857,7 +1858,11 @@
   "namedFunction": {
     "key": "namedFunction",
     "prefix": "nfn",
-    "body": ["const ${1:first} = (${2:second}) => { ${3:third} }"],
+    "body": [
+            "const $1 = ($2) => { ",
+            " $3 ",
+            " }"
+        ],
     "description": "Creates a named function",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },

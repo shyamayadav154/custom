@@ -1,4 +1,33 @@
 {
+  "function": {
+    "prefix": "fnc",
+    "body": [
+        "function ${1:methodName}($2) {",
+        "  $3",
+        "}"
+        ],
+    ]
+  },
+  "sleep": {
+    "prefix": "slp",
+    "body": [
+      "const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))"
+    ]
+  },
+  "react component": {
+    "prefix": "rc",
+    "body": [
+      "",
+      "const ${1:componentName}=()=> {",
+      "  return (",
+      "    <div>",
+      "      ${2:componentName}",
+      "    </div>",
+      "  )",
+      "}"
+    ],
+    "description": "react component"
+  },
   "resolver graphql": {
     "prefix": "resfn",
     "body": [
@@ -859,7 +888,7 @@
   "consoleLog": {
     "key": "consoleLog",
     "prefix": "clg",
-    "body": ["console.log(${1:first})"],
+    "body": ["console.log(${1})"],
     "description": "Displays a message in the console",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
@@ -1830,7 +1859,8 @@
   "forEach": {
     "key": "forEach",
     "prefix": "fre",
-    "body": ["${1:first}.forEach(${2:second} => {${3:third}})"],
+    "body": ["${1:first}.forEach(${2:second} => {${3:third}})"
+        ],
     "description": "Creates a forEach statement",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },

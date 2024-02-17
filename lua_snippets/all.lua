@@ -26,40 +26,42 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local k = require("luasnip.nodes.key_indexer").new_key
 
--- react useState snippet
--- ls.snippet.all = {
---   s("useState", {
---     t("const ["),
---     i(1, "state"),
---     t(", set"),
---     i(2, "setState"),
---     t("] = useState("),
---     i(3, "initialValue"),
---     t(");"),
---   }),
--- }
+local function get_current_word()
+  -- word under unnamed register
+  return vim.fn.getreg(vim.fn.nr2char(0))
+end
 
--- ls.add_snippets = {
---   all = {
---     ls.parser.parse_snippet("us", "const [${1:state}, set${1/(.)(.*)/${1:/u}${2:/e/}}] = useState(${2:initialValue});"),
---   },
--- }
 
 ls.add_snippets("all", {
-  s("ternary", {
-    -- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
-    i(1, "cond"),
-    t " ? ",
-    i(2, "then"),
-    t " : ",
-    i(3, "else"),
-  }),
-  s("useS", {
-    fmt("const [{}, set{setter}] = useState({})", {
-      i(1, "state"),
-      i(2, "initialValue"),
-      setter = l(l._1:sub(1, 1):upper() .. l._1:sub(2, -1), 1),
-    }),
-  }),
+  -- important! fmt does not return a snippet, it returns a table of nodes.
+  s( "example1", fmt("just an {iNode1}", { iNode1 = i(1, "example"), })),
+  s( "example2", fmt( [[ if {} then {} end ]],
+      {
+        -- i(1) is at nodes[1], i(2) at nodes[2].
+        i(1, "not now"),
+        i(2, "when"),
+      }
+    )
+  ),
+  -- s( "example3", fmt( [[ if <> then <> end ]],
+  --     {
+  --       -- i(1) is at nodes[1], i(2) at nodes[2].
+  --       i(1, "not now"),
+  --       i(2, "when"),
+  --     },
+  --     {
+  --       delimiters = "<>",
+  --     }
+  --   )
+  -- ),
+  s( "example4",
+    fmt( [[ repeat {a} with the same key {a} ]],
+      {
+        a = i(1, "this will be repeat"),
+      },
+      {
+        repeat_duplicates = true,
+      }
+    )
+  ),
 })
-

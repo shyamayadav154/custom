@@ -1,15 +1,16 @@
+local base = require "plugins.configs.lspconfig"
 local on_attach = require("plugins.configs.lspconfig").on_attach
 local capabilities = require("plugins.configs.lspconfig").capabilities
 
 local lspconfig = require "lspconfig"
 
 local function organise_imports()
-  local params = {
-    command = "_typescript.organizeImports",
-    arguments = { vim.api.nvim_buf_get_name(0) },
-    title = "",
-  }
-  vim.lsp.buf.execute_command(params)
+    local params = {
+        command = "_typescript.organizeImports",
+        arguments = { vim.api.nvim_buf_get_name(0) },
+        title = "",
+    }
+    vim.lsp.buf.execute_command(params)
 end
 
 local function add_missing_import()
@@ -22,53 +23,97 @@ local function add_missing_import()
 end
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "clangd", "eslint", "graphql", "prismals",'lua_ls' }
+local servers = { "html", "cssls", "clangd", "eslint", "graphql", "prismals", "graphql", "quick_lint_js",'tailwindcss' }
 
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
+    lspconfig[lsp].setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+    }
 end
 
-lspconfig.emmet_ls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = {
-    "html",
-    "css",
-    "scss",
-    -- "javascript",
-    -- "javascriptreact",
-    -- "typescript",
-    -- "typescriptreact",
-    "vue",
-    "svelte",
-    "markdown",
-    "pug",
-    "haml",
-    "xml",
-  },
+lspconfig.lua_ls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    Lua = {
+        hint = { enable = true },
+        telemetry = { enable = false },
+    },
 }
 
+lspconfig.emmet_ls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = {
+        "html",
+        "css",
+        "scss",
+        -- "javascript",
+        -- "javascriptreact",
+        -- "typescript",
+        -- "typescriptreact",
+        "vue",
+        "svelte",
+        "markdown",
+        "pug",
+        "haml",
+        "xml",
+    },
+}
+
+--disable formatimg on attach for tsserver
+local on_attach_tsserver = function(client, bufnr)
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+    on_attach(client, bufnr)
+end
+
 lspconfig.tsserver.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  -- init_options = {
-  --   preferences = {
-  --     disableSuggestions = true,
-  --   },
-  -- },
-  commands = {
-    OrganizeImports = {
-      organise_imports,
-      description = "Organize Imports",
+    on_attach = on_attach_tsserver,
+    -- on_attach = on_attach,
+    capabilities = capabilities,
+
+
+    init_options = {
+        -- maxTsServerMemory = 12288,
+        preferences = {
+            disableSuggestions = false,
+        },
     },
-    AddMissingImports = {
-      add_missing_import,
-      description = "Add missing imports",
+    commands = {
+        OrganizeImports = {
+            organise_imports,
+            description = "Organize Imports",
+        },
+        AddMissingImports = {
+            add_missing_import,
+            description = "Add missing imports",
+        },
     },
-  },
+    settings = {
+        javascript = {
+            inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+            },
+        },
+        typescript = {
+            inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+            },
+        },
+    },
 }
 
 --

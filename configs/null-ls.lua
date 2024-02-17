@@ -1,42 +1,49 @@
 local present, null_ls = pcall(require, "null-ls")
 
 if not present then
-  return
+    return
 end
 
 local b = null_ls.builtins
 
-
 local sources = {
 
-  -- webdev stuff
-  b.formatting.deno_fmt, -- choosed deno for ts/js files cuz its very fast!
-  b.formatting.prettier.with { filetypes = { "html", "markdown", "css", "javascript", "javascriptreact", "json" } }, -- so prettier works only on these filetypes
+    -- webdev stuff
+    b.formatting.prettier.with { filetypes = { "html", "markdown", "css", "javascript", "javascriptreact","typescript","typescriptreact" ,"json" } }, -- so prettier works only on these filetypes
+    -- b.formatting.prettier.with { filetypes = { "html", "markdown", "css", "javascript", "javascriptreact", "json" } }, -- so prettier works only on these filetypes
+    -- b.formatting.deno_fmt,                                                                                            -- choosed deno for ts/js files cuz its very fast!
+    -- b.formatting.prismaFmt,
 
-  b.code_actions.eslint,
+    b.code_actions.eslint,
+    -- b.code_actions.eslint_d,
+    b.diagnostics.jsonlint,
+    b.diagnostics.zsh,
 
-  -- cpsell
-  -- b.diagnostics.cspell,
-  -- b.code_actions.cspell,
-  --  b.code_actions.cspell.with({
-  --      config = {
-  --          find_json = function (cwd)
-  --              return vim.fn.expand('~/.config/nvim/lua/custom' .. '/.cspell.json')
-  --          end,
-  --      },
-  -- }),
+    -- b.diagnostics.dotenv_linter,
 
-  --codespell
-  b.diagnostics.codespell,
+    -- cpsell
+    -- b.diagnostics.cspell,
+    -- b.code_actions.cspell,
+    --  b.code_actions.cspell.with({
+    --      config = {
+    --          find_json = function (cwd)
+    --              return vim.fn.expand('~/.config/nvim/lua/custom' .. '/.cspell.json')
+    --          end,
+    --      },
+    -- }),
 
-  --luasnip
-  -- b.completion.spell,
+    --codespell
+    b.diagnostics.codespell,
+    b.formatting.codespell,
 
-  -- Lua
-  b.formatting.stylua,
+    --luasnip
+    -- b.completion.spell,
+
+    -- Lua
+    -- b.formatting.stylua,
 }
 
 null_ls.setup {
-  debug = true,
-  sources = sources,
+    debug = true,
+    sources = sources,
 }
