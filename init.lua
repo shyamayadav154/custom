@@ -7,6 +7,11 @@ autocmd("TextYankPost", {
   command = "silent! lua vim.highlight.on_yank()",
 })
 
+-- to handle the formatting of prisma files
+autocmd("FileType",{
+    pattern = "prisma",
+    command = "setlocal shiftwidth=2"
+})
 
 -- autocmd to format on buff write
 -- autocmd("BufWritePost", {
@@ -16,9 +21,10 @@ autocmd("TextYankPost", {
 
 -- autoc command to convert c Tab into const in javascript file
 autocmd("FileType", {
-  pattern = "javascript",
+  pattern = {"javascript", "typescript","typescriptreact"},
   command = "inoremap <buffer> c<Tab> const ",
 })
+
 
 
 -- autocmd("FileType", {
@@ -95,6 +101,7 @@ vim.opt.relativenumber = true
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
+
 vim.opt.expandtab = true
 
 vim.opt.smartindent = true
@@ -130,3 +137,4 @@ vim.g.lua_snippets_path = "~/.config/nvim/lua/custom/lua_snippets"
 
 -- quickfixl list modifiable
 vim.opt.filetype = "on"
+

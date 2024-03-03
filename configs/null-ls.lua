@@ -9,15 +9,22 @@ local b = null_ls.builtins
 local sources = {
 
     -- webdev stuff
-    b.formatting.prettier.with { filetypes = { "html", "markdown", "css", "javascript", "javascriptreact","typescript","typescriptreact" ,"json" } }, -- so prettier works only on these filetypes
-    -- b.formatting.prettier.with { filetypes = { "html", "markdown", "css", "javascript", "javascriptreact", "json" } }, -- so prettier works only on these filetypes
+    b.formatting.prettier,
+    -- b.formatting.prettierd.with { filetypes = { "html", "markdown", "css", "javascript", "javascriptreact", "json" } }, -- so prettier works only on these filetypes
     -- b.formatting.deno_fmt,                                                                                            -- choosed deno for ts/js files cuz its very fast!
     -- b.formatting.prismaFmt,
 
-    b.code_actions.eslint,
+    -- b.diagnostics.eslint,
+    -- b.code_actions.eslint,
+    -- b.diagnostics.eslint_d,
     -- b.code_actions.eslint_d,
-    b.diagnostics.jsonlint,
+    -- b.diagnostics.jsonlint,
     b.diagnostics.zsh,
+    -- b.formatting.prismaFmt,
+    -- b.formatting.beautysh,
+    b.formatting.shfmt,
+    -- b.diagnostics.markdownlint,
+    -- b.formatting.markdownlint,
 
     -- b.diagnostics.dotenv_linter,
 
@@ -32,15 +39,18 @@ local sources = {
     --      },
     -- }),
 
+    -- b.diagnostics.editorconfig_checker,
+    --refactoring
+    -- b.code_actions.refactoring,
+    -- b.code_actions.gitsigns,
     --codespell
     b.diagnostics.codespell,
     b.formatting.codespell,
 
-    --luasnip
     -- b.completion.spell,
 
     -- Lua
-    -- b.formatting.stylua,
+    b.formatting.stylua,
 }
 
 null_ls.setup {

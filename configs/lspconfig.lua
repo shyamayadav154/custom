@@ -23,7 +23,19 @@ local function add_missing_import()
 end
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "clangd", "eslint", "graphql", "prismals", "graphql", "quick_lint_js",'tailwindcss' }
+local servers = { "html", "cssls", "clangd",  "graphql", 'bashls', "quick_lint_js", "eslint"}
+
+
+lspconfig.prismals.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+
+    prisma = {
+        prismaFmtBin = "prisma",
+    }
+}
+
+
 
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
@@ -91,26 +103,27 @@ lspconfig.tsserver.setup {
         },
     },
     settings = {
+        importModuleSpecifierPreference = "non-relative",
         javascript = {
             inlayHints = {
-                includeInlayEnumMemberValueHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayFunctionParameterTypeHints = true,
+                -- includeInlayEnumMemberValueHints = true,
+                -- includeInlayFunctionLikeReturnTypeHints = true,
+                -- includeInlayFunctionParameterTypeHints = true,
                 includeInlayParameterNameHints = 'all',
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayVariableTypeHints = true,
+                -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                -- includeInlayPropertyDeclarationTypeHints = true,
+                -- includeInlayVariableTypeHints = true,
             },
         },
         typescript = {
             inlayHints = {
-                includeInlayEnumMemberValueHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayFunctionParameterTypeHints = true,
+                -- includeInlayEnumMemberValueHints = true,
+                -- includeInlayFunctionLikeReturnTypeHints = true,
+                -- includeInlayFunctionParameterTypeHints = true,
                 includeInlayParameterNameHints = 'all',
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayVariableTypeHints = true,
+                -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                -- includeInlayPropertyDeclarationTypeHints = true,
+                -- includeInlayVariableTypeHints = true,
             },
         },
     },

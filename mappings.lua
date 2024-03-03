@@ -74,7 +74,7 @@ M.general = {
         -- conform format
         -- ["<leader>fm"] = {
         --   function()
-        --     require("conform").format { lsp_fallback = true, async = false, timeout_ms = 500 }
+        --     require("conform").format { lsp_fallback = true, async = false, }
         --   end,
         --   "Format with conform",
         -- },
