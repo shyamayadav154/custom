@@ -10,7 +10,7 @@ require("typescript-tools").setup {
     end,
     handlers = {
         -- not used warning disable
-        ["textDocument/publishDiagnostics"] = api.filter_diagnostics { 6133 },
+        -- ["textDocument/publishDiagnostics"] = api.filter_diagnostics { 6133 },
     },
     settings = {
         importModuleSpecifierPreference = "non-relative",

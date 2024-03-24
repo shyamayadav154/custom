@@ -23,8 +23,19 @@ local function add_missing_import()
 end
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "clangd",  "graphql", 'bashls', "quick_lint_js", "eslint"}
+local servers = { "html", "cssls", "clangd", "graphql", "bashls", "quick_lint_js", "eslint", "jsonls", "gopls" }
 
+lspconfig.rust_analyzer.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        ["rust-analyzer"] = {
+            checkOnSave = {
+                command = "clippy",
+            },
+        },
+    },
+}
 
 lspconfig.prismals.setup {
     on_attach = on_attach,
@@ -32,10 +43,8 @@ lspconfig.prismals.setup {
 
     prisma = {
         prismaFmtBin = "prisma",
-    }
+    },
 }
-
-
 
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
@@ -85,7 +94,6 @@ lspconfig.tsserver.setup {
     -- on_attach = on_attach,
     capabilities = capabilities,
 
-
     init_options = {
         -- maxTsServerMemory = 12288,
         preferences = {
@@ -109,7 +117,7 @@ lspconfig.tsserver.setup {
                 -- includeInlayEnumMemberValueHints = true,
                 -- includeInlayFunctionLikeReturnTypeHints = true,
                 -- includeInlayFunctionParameterTypeHints = true,
-                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHints = "all",
                 -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
                 -- includeInlayPropertyDeclarationTypeHints = true,
                 -- includeInlayVariableTypeHints = true,
@@ -120,7 +128,7 @@ lspconfig.tsserver.setup {
                 -- includeInlayEnumMemberValueHints = true,
                 -- includeInlayFunctionLikeReturnTypeHints = true,
                 -- includeInlayFunctionParameterTypeHints = true,
-                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHints = "all",
                 -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
                 -- includeInlayPropertyDeclarationTypeHints = true,
                 -- includeInlayVariableTypeHints = true,

@@ -1,18 +1,38 @@
 {
-  "function": {
-    "prefix": "fnc",
+  "query options": {
+    "prefix": "qho",
     "body": [
-        "function ${1:methodName}($2) {",
-        "  $3",
-        "}"
-        ],
-    ]
+      "/** @param {import('@apollo/client').QueryHookOptions} options  */"
+    ],
+    "description": "query options"
+  },
+  "mutation options": {
+    "prefix": "qmo",
+    "body": [
+      "/** @param {import('@apollo/client').MutationHookOptions} options */"
+    ],
+    "description": "query options"
+  },
+  "jsdoc func": {
+    "prefix": "@func",
+    "body": ["/** @param {$1} $2/", "* @returns {$3} */"],
+    "description": "jsdoc param"
+  },
+  "jsdoc param": {
+    "prefix": "@param",
+    "body": [
+      "/**",
+      " * @param {${1:type}} ${2:name} - ${3:description}",
+      " */"
+    ],
+    "description": "jsdoc param"
   },
   "sleep": {
     "prefix": "slp",
     "body": [
       "const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))"
-    ]
+    ],
+    "description": "sleep"
   },
   "react component": {
     "prefix": "rc",
@@ -175,7 +195,6 @@
     ],
     "description": "Prisma typedef"
   },
-
   "prisma typedef": {
     "prefix": "pdef",
     "body": [
@@ -205,7 +224,6 @@
     "body": ["/** @type { import('@prisma_internals/company').Prisma.$1 } */"],
     "description": "JSDoc typedef"
   },
-
   "exportType": {
     "body": ["export type ${1:first} = {${2:second}}"],
     "key": "exportType",
@@ -1859,20 +1877,19 @@
   "forEach": {
     "key": "forEach",
     "prefix": "fre",
-    "body": ["${1:first}.forEach(${2:second} => {${3:third}})"
-        ],
+    "body": ["${1:first}.forEach(${2:second} => {${3:third}})"],
     "description": "Creates a forEach statement",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
   "forOf": {
     "key": "forOf",
-    "prefix": "fof",
+    "prefix": "for",
     "body": ["for(let ${1:first} of ${2:second}) {${3:third}}"],
     "description": "Iterating over property names of iterable objects",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
-  "forIn": {
-    "key": "forIn",
+  "foreign": {
+    "key": "foreign",
     "prefix": "fin",
     "body": ["for(let ${1:first} in ${2:second}) {${3:third}}"],
     "description": "Iterating over property values of iterable objects",

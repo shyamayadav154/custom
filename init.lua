@@ -25,6 +25,11 @@ autocmd("FileType", {
   command = "inoremap <buffer> c<Tab> const ",
 })
 
+autocmd("BufReadPost", {
+  pattern = "*",
+  command = "TSContextEnable",
+})
+
 
 
 -- autocmd("FileType", {
