@@ -69,11 +69,15 @@ M.general = {
     -- diff get 2
     ["<leader>dl"] = { "<CMD>diffget //2<CR>", "Diff get right" },
     ["<leader>dh"] = { "<CMD>diffget //3<CR>", "Diff get left" },
+    -- cursor in middle after search
+    ["n"]={"nzzzv","Cursor center search"},
+    ["N"]={"Nzzzv","Cursor center search"},
     -- go to window below
     ["gj"] = { "<C-w>j", "Go to window below" },
     ["gk"] = { "<C-w>k", "Go to window above" },
     ["gH"] = { "<C-w>h", "Go to window left" },
     ["gL"] = { "<C-w>l", "Go to window right" },
+    ["<C-f>"]={":<cmd>silent !tmux neww ts<CR>"},
 
     -- git reset current file
     ["<leader>gr"] = { "<CMD>Git restore %<CR>", "Git reset current file" },
